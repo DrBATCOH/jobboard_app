@@ -60,6 +60,12 @@ class CompanyStorage(BaseStorage):
                 return company
         return None
 
+    def get_company_id(self, company_id: int) -> Company | None:
+        for company in self._companies:
+            if company.id == company_id:
+                return company
+        return None
+
 
 class VacancyStorage(BaseStorage):
 
@@ -80,4 +86,11 @@ class VacancyStorage(BaseStorage):
 
     def get_all_vacanies(self) -> list[Vacancy]:
         return self._vacancies
- 
+    
+
+    def get_vacancy_id(self, vacancy_id: int) -> Vacancy | None:
+        for vacancy in self._vacancies:
+            if vacancy.id == vacancy_id:
+                return vacancy
+        return None
+    

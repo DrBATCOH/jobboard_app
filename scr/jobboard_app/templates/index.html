@@ -11,7 +11,7 @@
             </tr>
             {% for vacancy in vacancies %}
                 <tr>
-                    <td>{{ vacancy.name }}</td>
+                    <td><a href="{% url 'vacancy' vacancy.id %}">{{ vacancy.name }}</a></td>
                     <td>{{ vacancy.company}}</td>
                     <td>{{ vacancy.level }}</td>
                     <td>{{ vacancy.expirience }}</td>

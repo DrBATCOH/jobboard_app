@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Awesome jobboart app!</title>
+        <title>JOBBOARD</title>
     </head>
     <body>
         <nav>
             <a href="{% url 'index' %}">Index</a>
-            <a href="{% url 'vacancy-add' %}">Add vacancy</a>
-            <a href="{% url 'company' %}">Companies</a>
-            <a href="{% url 'company-add' %}">Add Company</a>
+            <a href="{% url 'vacancy_add' %}">Add vacancy</a>
+            <a href="{% url 'company_list' %}">Companies</a>
+            <a href="{% url 'company_add' %}">Add Company</a>
         </nav>
         {% block content %}
         {% endblock %}
