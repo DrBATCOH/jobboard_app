@@ -1,10 +1,15 @@
 from django import forms
+from .validators import validate_swear_word
 
 
 class AddCompanyForm(forms.Form):
-    name = forms.CharField(label="Company", max_length=30, strip=True)
+    name = forms.CharField(
+        label="Company",
+        max_length=30,
+        strip=True,
+        validators=[validate_swear_word]
+    )
     employees_number = forms.IntegerField(label="Employees", min_value=1)
-
 
 
 class AddVacancyForm(forms.Form):

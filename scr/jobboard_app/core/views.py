@@ -1,4 +1,5 @@
 from __future__ import annotations
+import timeit
 from django.http import (HttpResponse,
                          HttpResponseRedirect,
                          HttpResponseBadRequest
@@ -26,6 +27,7 @@ from .forms import (AddCompanyForm,
 company_storage = CompanyStorage()
 vacancy_storage = VacancyStorage(company_storage=company_storage)
 
+
 @require_http_methods(request_method_list=["GET"])
 def index(request: HttpRequest) -> HttpResponse:
     vacancies = vacancy_storage.get_all_vacanies()
@@ -39,7 +41,7 @@ def add_company(request: HttpRequest) -> HttpResponse:
         form = AddCompanyForm()
         context = {"form": form}
         return render(request=request, template_name="company_add.html", context=context)
-    
+
     elif request.method == "POST":
         form = AddCompanyForm(data=request.POST)
         if form.is_valid():
@@ -58,7 +60,6 @@ def add_company(request: HttpRequest) -> HttpResponse:
 @require_http_methods(request_method_list=["GET"])
 def company_list(request: HttpRequest) -> HttpResponse:
     companies = company_storage.get_all_companies()
-    print(companies)
     context = {"companies": companies}
     return render(request=request, template_name="company_list.html", context=context)
 
@@ -69,7 +70,7 @@ def add_vacancy(request: HttpRequest) -> HttpResponse:
         form = AddVacancyForm()
         context = {"form": form}
         return render(request=request, template_name="vacancy_add.html", context=context)
-    
+
     elif request.method == "POST":
         form = AddVacancyForm(data=request.POST)
         if form.is_valid():
