@@ -1,19 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
         <h1>Add Company</h1>
-        <form method="POST", action="{% url 'vacancy-add' %}">
-            <label for="name">Position</label><br>
-            <input type="text" id="name" name="name"><br><br>
-            <label for="company">Company</label><br>
-            <input type="text" id="company" name="company"><br><br>
-            <label for="level">Level</label><br>
-            <input type="text" id="level" name="level"><br><br>
-            <label for="expiriens">Expiriens</label><br>
-            <input type="text" id="expiriens" name="expiriens"><br><br>
-            <label for="min_salary">Min_salary</label><br>
-            <input type="number" id="min_salary" name="min_salary"><br><br>
-            <label for="max_salary">Max_salary</label><br>
-            <input type="number" id="max_salary" name="max_salary"><br><br>
+        <form method="POST", action="{% url 'vacancy_add' %}">
+            {% csrf_token %}
+            {{ form }}
             <input type="submit" id="submit">
 
         </form>
