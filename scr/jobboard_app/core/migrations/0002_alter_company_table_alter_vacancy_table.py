@@ -4,18 +4,17 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('core', '0001_initial'),
+        ("core", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelTable(
-            name='company',
-            table='companies',
+            name="company",
+            table="companies",
         ),
         migrations.AlterModelTable(
-            name='vacancy',
-            table='vacancies',
+            name="vacancy",
+            table="vacancies",
         ),
     ]

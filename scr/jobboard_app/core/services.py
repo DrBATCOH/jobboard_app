@@ -27,16 +27,16 @@ class CompanyAlreadyExistsError(Exception):
 class CompanyNotExistsError(Exception):
     ...
 
+
 class BaseStorage:
     ID_COUNT = 0
 
     def update_count(self) -> int:
         self.ID_COUNT += 1
         return self.ID_COUNT
-    
+
 
 class CompanyStorage(BaseStorage):
-
     def __init__(self) -> None:
         self._companies: list[Company] = []
 
@@ -68,14 +68,14 @@ class CompanyStorage(BaseStorage):
 
 
 class VacancyStorage(BaseStorage):
-
-
     def __init__(self, company_storage: CompanyStorage) -> None:
         self._vacancies: list[Vacancy] = []
         self._company_storage = company_storage
 
     def add_vacancy(self, vacancy_to_add: Vacancy) -> None:
-        company = self._company_storage.get_company_by_name(company_name=vacancy_to_add.company)
+        company = self._company_storage.get_company_by_name(
+            company_name=vacancy_to_add.company
+        )
         if not company:
             raise CompanyNotExistsError
 
@@ -86,11 +86,9 @@ class VacancyStorage(BaseStorage):
 
     def get_all_vacanies(self) -> list[Vacancy]:
         return self._vacancies
-    
 
     def get_vacancy_id(self, vacancy_id: int) -> Vacancy | None:
         for vacancy in self._vacancies:
             if vacancy.id == vacancy_id:
                 return vacancy
         return None
-    

@@ -3,29 +3,56 @@ from django.db import models
 
 class Company(models.Model):
     name = models.CharField(unique=True, max_length=30)
-    employeer_number = models.PositiveIntegerField()
+    employees_number = models.PositiveIntegerField()
 
     class Meta:
         db_table = "companies"
 
+    
 
 class Vacancy(models.Model):
-    LEVELS = (
-        ("INTERN", "INTERN"),
-        ("JUNIOR", "JUNIOR"),
-        ("MIDDLE", "MIDDLE"),
-        ("SENIOR", "SENIOR"),
+    name = models.CharField(max_length=30)
+    level = models.ForeignKey(
+        to="Level",
+        on_delete=models.CASCADE,
+        related_name="vacancy",
     )
-    level = models.CharField(choices=LEVELS, max_length=10)
-    expirience = models.CharField(max_length=30)
+    expirience = models.CharField(max_length=50)
     min_salary = models.PositiveIntegerField(null=True)
     max_salary = models.PositiveIntegerField(null=True)
     company = models.ForeignKey(
         to="Company",
         on_delete=models.CASCADE,
         related_name="vacancies",
-        related_query_name="vacancy"
+        related_query_name="vacancy",
+    )
+    tags = models.ManyToManyField(
+        to="Tag", related_name="vacancies", db_table="vacancies_tags"
     )
 
     class Meta:
         db_table = "vacancies"
+
+
+class Level(models.Model):
+    name = models.CharField(max_length=20, unique=True)
+
+    class Meta:
+        db_table = "levels"
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    class Meta:
+        db_table = "tags"
+
+
+class Expirience(models.Model):
+    name = models.CharField(max_length=20, unique=True)
+
+    class Meta:
+        db_table = "expirience"
+
+
+

@@ -1,7 +1,8 @@
 from __future__ import annotations
-from django.http import HttpResponseBadRequest
-from typing import Callable, TYPE_CHECKING
 
+from typing import TYPE_CHECKING, Callable
+
+from django.http import HttpResponseBadRequest
 
 if TYPE_CHECKING:
     from django.http import HttpRequest, HttpResponse
