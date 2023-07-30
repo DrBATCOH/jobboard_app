@@ -19,7 +19,7 @@
                 <td>{{ vacancy.company.name}}</td>
                 <td><a href="{% url 'vacancy' vacancy.id %}">{{ vacancy.name }}</a></td>
                 <td>{{ vacancy.level.name }}</td>
-                <td>{{ vacancy.expirience }}</td>
+                <td>{{ vacancy.expirience.name }}</td>
                 {% if vacancy.min_salary and vacancy.max_salary %}
                     <td>{{ vacancy.min_salary }} - {{ vacancy.max_salary }} USD</td>
                 {% elif vacancy.min_salary and not vacancy.max_salary %}

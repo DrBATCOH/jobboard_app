@@ -1,21 +1,11 @@
 from django import forms
 
-from core.validators import (
-    validate_swear_word,
-    ValidateMaxTags,
-    validate_not_exist_company
-)
+from core.presentation.validators import ValidateMaxTags, validate_not_exist_company
 from core.models import Level, Expirience
 
 LEVELS = [(level.name, level.name) for level in Level.objects.all()]
 
 EXPIRIENCE = [(expirience.name, expirience.name) for expirience in Expirience.objects.all()]
-
-class AddCompanyForm(forms.Form):
-    name = forms.CharField(
-        label="Company", max_length=30, strip=True, validators=[validate_swear_word]
-    )
-    employees_number = forms.IntegerField(label="Employees", min_value=1)
 
 
 class AddVacancyForm(forms.Form):
@@ -30,10 +20,12 @@ class AddVacancyForm(forms.Form):
 
 
 class SearchVacancyForm(forms.Form):
+    template_name = "search_form_snippet.html"
+
     position = forms.CharField(label="Position", max_length=30, strip=True, required=False)
-    company = forms.CharField(label="Company", max_length=30, strip=True, validators=[validate_not_exist_company], required=False)
-    level_name = forms.ChoiceField(label="Level", choices=[("","ALL")] + LEVELS, required=False)
-    expirience = forms.ChoiceField(label="Expiriens", choices=[("","ALL")] + EXPIRIENCE, required=False)
+    company = forms.CharField(label="Company", max_length=30, strip=True, required=False)
+    level_name = forms.ChoiceField(label="Level", choices=[("", "ALL")] + LEVELS, required=False)
+    expirience = forms.ChoiceField(label="Expiriens", choices=[("", "ALL")] + EXPIRIENCE, required=False)
     min_salary = forms.IntegerField(label="Min Salary", min_value=0, required=False)
     max_salary = forms.IntegerField(label="Max Salary", min_value=0, required=False)
     tag = forms.CharField(label="Tag", required=False)

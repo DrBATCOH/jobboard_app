@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import (
+from core.presentation.views import (
     index,
     add_company,
     company_list,
