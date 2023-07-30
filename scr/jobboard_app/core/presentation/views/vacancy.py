@@ -41,7 +41,7 @@ def add_vacancy(request: HttpRequest) -> HttpResponse:
         )
 
     elif request.method == "POST":
-        form = AddVacancyForm(data=request.POST)
+        form = AddVacancyForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             data = convert_data_from_form_to_dto(AddVacancyDTO, form.cleaned_data)
             try:

@@ -16,6 +16,7 @@ class AddVacancyForm(forms.Form):
     expirience = forms.ChoiceField(label="Expiriens", choices=EXPIRIENCE)
     min_salary = forms.IntegerField(label="Min Salary", min_value=0, required=False)
     max_salary = forms.IntegerField(label="Max Salary", min_value=0, required=False)
+    attachment = forms.FileField(label="Attachment", allow_empty_file=False)
     tags = forms.CharField(label="Tags", widget=forms.Textarea, validators=[ValidateMaxTags(max_count=5)], required=False)
 
 

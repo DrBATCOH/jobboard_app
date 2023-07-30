@@ -1,4 +1,5 @@
 from __future__ import annotations
+import uuid
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -58,6 +59,10 @@ def create_vacancy(data: AddVacancyDTO) -> None:
         except Company.DoesNotExist:
             raise CompanyNotExists
 
+        file_extansion = data.attachment.name.split(".")[-1]
+        file_name = str(uuid.uuid4())
+        data.attachment.name = file_name + "." + file_extansion
+        
         created_vacancy = Vacancy.objects.create(
             name=data.name,
             company=company,
@@ -65,6 +70,7 @@ def create_vacancy(data: AddVacancyDTO) -> None:
             expirience=expirience,
             min_salary=data.min_salary,
             max_salary=data.max_salary,
+            attachment=data.attachment
         )
 
         created_vacancy.tags.set(tags_list)
