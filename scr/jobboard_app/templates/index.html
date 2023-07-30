@@ -1,30 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
-        <h1>Vacancies list</h1>
-        <table>
+    <form method="GET", action="{% url 'index' %}">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" id="submit">
+    </form>
+    <h1>Vacancies list</h1>
+    <table>
+        <tr>
+            <th>Company</th>
+            <th>Vacancy</th>
+            <th>Level</th>
+            <th>Expirience</th>
+            <th>Salary</th>
+        </tr>
+        {% for vacancy in vacancies %}
             <tr>
-                <th>Vacancy</th>
-                <th>Company</th>
-                <th>Level</th>
-                <th>Expirience</th>
-                <th>Salary</th>
+                <td>{{ vacancy.company.name}}</td>
+                <td><a href="{% url 'vacancy' vacancy.id %}">{{ vacancy.name }}</a></td>
+                <td>{{ vacancy.level.name }}</td>
+                <td>{{ vacancy.expirience.name }}</td>
+                {% if vacancy.min_salary and vacancy.max_salary %}
+                    <td>{{ vacancy.min_salary }} - {{ vacancy.max_salary }} USD</td>
+                {% elif vacancy.min_salary and not vacancy.max_salary %}
+                    <td> From {{ vacancy.min_salary }} USD</td>
+                {% elif not vacancy.min_salary and vacancy.max_salary %}
+                    <td> Up to {{ vacancy.max_salary }} USD</td>
+                {% elif not vacancy.min_salary and not vacancy.max_salary %}
+                    <td> Undisclose salary</td>
+                {% endif %}
             </tr>
-            {% for vacancy in vacancies %}
-                <tr>
-                    <td><a href="{% url 'vacancy' vacancy.id %}">{{ vacancy.name }}</a></td>
-                    <td>{{ vacancy.company}}</td>
-                    <td>{{ vacancy.level }}</td>
-                    <td>{{ vacancy.expirience }}</td>
-                    {% if vacancy.min_salary and vacancy.max_salary %}
-                        <td>{{ vacancy.min_salary }} - {{ vacancy.max_salary }} USD</td>
-                    {% elif vacancy.min_salary and not vacancy.max_salary %}
-                        <td> From {{ vacancy.min_salary }} USD</td>
-                    {% elif not vacancy.min_salary and vacancy.max_salary %}
-                        <td> Up to {{ vacancy.max_salary }} USD</td>
-                    {% elif not vacancy.min_salary and not vacancy.max_salary %}
-                        <td> Undisclose salary</td>
-                    {% endif %}
-                </tr>
-            {% endfor %}
-        </table>
+        {% endfor %}
+    </table>
 {% endblock %}
