@@ -17,3 +17,4 @@ urlpatterns = [
     path("vacancy/<int:vacancy_id>/", get_vacancy, name="vacancy"),
     path("company/<int:company_id>/", get_company, name="company"),
 ]
+

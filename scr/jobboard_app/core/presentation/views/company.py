@@ -23,7 +23,7 @@ def add_company(request: HttpRequest) -> HttpResponse:
         context = {"form": form}
         return render(request=request, template_name="company_add.html", context=context)
     elif request.method == "POST":
-        form = AddCompanyForm(data=request.POST)
+        form = AddCompanyForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             data = convert_data_from_form_to_dto(AddCompanyDTO, form.cleaned_data)
             create_company(data=data)
