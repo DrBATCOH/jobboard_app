@@ -10,9 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
+import logging
+import logging.config
 from pathlib import Path
 
 from dotenv import load_dotenv
+from jobboard_app.logger_formater import ContextFormatter
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -137,4 +140,37 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 MEDIA_ROOT = os.path.join(BASE_DIR.parents[2], "media")
 
 MEDIA_URL = "/media/"
- 
+
+# Configure logging
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "console_formatter": {
+            "()": ContextFormatter,
+            "format": "{asctime} - {levelname} - {name} - {funcName}:{lineno} - {message}",
+            "style": "{",
+        }
+    },
+    "handlers": {
+        "console_handler": {
+            "class": "logging.StreamHandler",
+            "level": os.environ["LOG_LEVEL"],
+            "formatter": "console_formatter"
+        }
+    },
+    "loggers": {
+        "root": {
+            "level": os.environ["LOG_LEVEL"],
+            "handlers": ["console_handler"]
+        },
+        "django": {
+            "level": os.environ["LOG_LEVEL"],
+            "handlers": ["console_handler"]
+        },
+        "PIL": {
+            "level": "WARNING",
+            "handlers": ["console_handler"]
+        }
+    }
+}
