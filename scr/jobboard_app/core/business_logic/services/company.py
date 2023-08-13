@@ -1,15 +1,22 @@
 from __future__ import annotations
+
 from typing import TYPE_CHECKING
+
+
+from django.db.models import Count
+
 
 if TYPE_CHECKING:
     from core.business_logic.dto import AddCompanyDTO
 
-from django.db.models import Count
 from core.models import Company
+from core.business_logic.services.common import replece_file_name_to_uupd, optimize_image
 
 
 def create_company(data: AddCompanyDTO) -> None:
-    Company.objects.create(name=data.name, employees_number=data.employees_number)
+    data.logo = replece_file_name_to_uupd(file=data.logo)
+    data.logo = optimize_image(file=data.logo)
+    Company.objects.create(name=data.name, employees_number=data.employees_number, logo=data.logo)
 
 
 def get_companies() -> list(Company):

@@ -10,7 +10,7 @@ from django.views.decorators.http import require_http_methods
 if TYPE_CHECKING:
     from django.http import HttpRequest
 
-from core.presentation.forms import AddVacancyForm, SearchVacancyForm
+from core.presentation.forms import SearchVacancyForm, AddVacancyForm
 from core.business_logic.services import search_vacancies, create_vacancy, get_vacancy_by_id
 from core.business_logic.errors import CompanyNotExists
 from core.business_logic.dto import SearchVacancyDTO, AddVacancyDTO
@@ -41,7 +41,7 @@ def add_vacancy(request: HttpRequest) -> HttpResponse:
         )
 
     elif request.method == "POST":
-        form = AddVacancyForm(data=request.POST)
+        form = AddVacancyForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             data = convert_data_from_form_to_dto(AddVacancyDTO, form.cleaned_data)
             try:

@@ -1,6 +1,11 @@
 from django import forms
 
-from core.presentation.validators import ValidateMaxTags, validate_not_exist_company
+from core.presentation.validators import (
+    ValidateMaxTags,
+    validate_not_exist_company,
+    ValidateFileExtension,
+    ValidateFileSize
+)
 from core.models import Level, Expirience
 
 LEVELS = [(level.name, level.name) for level in Level.objects.all()]
@@ -16,6 +21,7 @@ class AddVacancyForm(forms.Form):
     expirience = forms.ChoiceField(label="Expiriens", choices=EXPIRIENCE)
     min_salary = forms.IntegerField(label="Min Salary", min_value=0, required=False)
     max_salary = forms.IntegerField(label="Max Salary", min_value=0, required=False)
+    attachment = forms.FileField(label="Attachment", allow_empty_file=False, validators=[ValidateFileExtension("pdf"), ValidateFileSize(max_size=5_000_000)])
     tags = forms.CharField(label="Tags", widget=forms.Textarea, validators=[ValidateMaxTags(max_count=5)], required=False)
 
 

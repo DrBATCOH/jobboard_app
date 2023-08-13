@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+from django.core.files import File
+
 
 @dataclass
 class SearchVacancyDTO:
@@ -20,4 +22,5 @@ class AddVacancyDTO:
     expirience: str
     min_salary: int | None
     max_salary: int | None
+    attachment: File
     tags: str

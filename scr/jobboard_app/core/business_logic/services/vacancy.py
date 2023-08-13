@@ -8,6 +8,7 @@ from django.db import transaction
 
 from core.models import Vacancy, Company, Tag, Level, Expirience
 from core.business_logic.errors import CompanyNotExists
+from core.business_logic.services.common import replece_file_name_to_uupd
 
 
 def search_vacancies(search_filters: SearchVacancyDTO) -> list[Vacancy]:
@@ -58,6 +59,8 @@ def create_vacancy(data: AddVacancyDTO) -> None:
         except Company.DoesNotExist:
             raise CompanyNotExists
 
+        data.attachment = replece_file_name_to_uupd(file=data.attachment)
+        
         created_vacancy = Vacancy.objects.create(
             name=data.name,
             company=company,
@@ -65,6 +68,7 @@ def create_vacancy(data: AddVacancyDTO) -> None:
             expirience=expirience,
             min_salary=data.min_salary,
             max_salary=data.max_salary,
+            attachment=data.attachment
         )
 
         created_vacancy.tags.set(tags_list)

@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
+{% if company.logo %}
+    <img src="{{ company.logo.url }}" >
+{% endif %}
 <h1>{{ company.name }}</h1>
 <p>Employeers: {{ company.employees_number }}</p>
 <p>Open Position: {{ company.vacancy__count }}</p>
